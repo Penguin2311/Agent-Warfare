@@ -1,0 +1,12 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1744531291
+default_env.tres::Environment::-1::1744511491::0::1::::<><>::
+GameMap.gd::GDScript::-1::1744529023::0::1::::<>Node<>::
+icon.png::CompressedTexture2D::4911466607218204444::1744511491::1744511500::1::::<><>::
+main.gd::GDScript::-1::1744529023::0::1::::<>Control<>::
+Main.tscn::PackedScene::5155134712791656689::1744531262::0::1::::<><>::res://main.gd<>res://MapDisplay.gd
+MapDisplay.gd::GDScript::-1::1744525321::0::1::::<>Node2D<>::
+MapNode.gd::GDScript::-1::1744528387::0::1::::MapNode<>RefCounted<>::
+plan.gd::GDScript::-1::1744531262::0::1::::<>Node<>::
+unit.gd::GDScript::-1::1744525472::0::1::::Unit<>Resource<>::
+::res://addons/::1744514179

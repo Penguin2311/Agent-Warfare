@@ -1,0 +1,7 @@
+res://Main.tscn
+res://plan.gd
+res://main.gd
+res://unit.gd
+res://GameMap.gd
+res://MapNode.gd
+res://MapDisplay.gd

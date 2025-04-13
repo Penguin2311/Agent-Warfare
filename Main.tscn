@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfpgky1gidhwr"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_lg1xj"]
+[ext_resource type="Script" path="res://MapDisplay.gd" id="2_k35vm"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 633.0
+offset_bottom = 147.0
+script = ExtResource("1_lg1xj")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 1082.0
+offset_bottom = 31.0
+
+[node name="SendButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Send to Gemini"
+
+[node name="ResponseLabel" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+autowrap_mode = 3
+
+[node name="Number of Cities" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Number of Cities"
+
+[node name="CityCountSpinBox" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+min_value = 4.0
+max_value = 10.0
+value = 4.0
+
+[node name="Number of Cities2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Number of Fields"
+
+[node name="FieldCountSpinBox" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+min_value = 5.0
+max_value = 20.0
+value = 10.0
+
+[node name="StartGameButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="NextTurnButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Next"
+
+[node name="GeminiRequest" type="HTTPRequest" parent="."]
+
+[node name="MapDisplay" type="Node2D" parent="."]
+script = ExtResource("2_k35vm")

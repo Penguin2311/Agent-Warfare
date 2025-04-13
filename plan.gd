@@ -1,0 +1,2 @@
+# plan.gd
+extends Node
