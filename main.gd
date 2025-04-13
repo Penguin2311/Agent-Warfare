@@ -9,7 +9,7 @@ extends Control
 @onready var map_display: Node2D = $MapDisplay
 @onready var city_count_spinbox: SpinBox = $VBoxContainer/CityCountSpinBox
 @onready var field_count_spinbox: SpinBox = $VBoxContainer/FieldCountSpinBox
-
+@onready var player_instruction_input: LineEdit = $VBoxContainer/PlayerInstructionInput 
 # --- NEW UI References (Add these buttons in your scene!) ---
 @onready var start_game_button: Button = $VBoxContainer/StartGameButton # Add this button
 @onready var next_turn_button: Button = $VBoxContainer/NextTurnButton # Add this button
@@ -404,7 +404,7 @@ Constraints:
 
 
 func parse_llm_actions(text: String, faction: Unit.Faction) -> Array[Dictionary]:
-	var actions = []
+	var actions: Array[Dictionary] = [] # <--- FIX HERE: Explicitly type the array
 	var lines = text.strip_edges().split("\n")
 	var faction_name = UnitRes.Faction.keys()[faction]
 	var units_acted_this_turn = {} # Track units to ensure one action per unit
@@ -446,6 +446,7 @@ func parse_llm_actions(text: String, faction: Unit.Faction) -> Array[Dictionary]
 					printerr("Parse Action Error: MOVE requires 3 parts (MOVE Unit Target). Line: %s" % line)
 					continue
 				var target_node_name = parts[2]
+				# This dictionary implicitly matches the expected type
 				actions.append({"type": "MOVE", "unit_name": unit_name, "target_node_name": target_node_name})
 				units_acted_this_turn[unit_name] = true
 			"ATTACK":
@@ -453,13 +454,14 @@ func parse_llm_actions(text: String, faction: Unit.Faction) -> Array[Dictionary]
 					printerr("Parse Action Error: ATTACK requires 3 parts (ATTACK Attacker Target). Line: %s" % line)
 					continue
 				var target_unit_name = parts[2]
+				# This dictionary implicitly matches the expected type
 				actions.append({"type": "ATTACK", "attacker_name": unit_name, "target_name": target_unit_name})
 				units_acted_this_turn[unit_name] = true
 			_:
 				printerr("Parse Action Error: Unknown command '%s'. Line: %s" % [command, line])
 
 	print("Parsed %d actions." % actions.size())
-	return actions
+	return actions # Now 'actions' is guaranteed to be of type Array[Dictionary]
 
 
 func execute_llm_actions(actions: Array[Dictionary], faction: Unit.Faction):
@@ -591,9 +593,19 @@ func move_unit(unit: Unit, target_node_name: String) -> bool:
 	#	return false
 
 	# Perform the move
-	var found = current_node.units.erase(unit) # Remove from old node's list
-	if not found:
+
+	# --- FIX STARTS HERE ---
+	# 1. Check if the unit exists in the current node's list *before* erasing
+	var found_in_old_node = current_node.units.has(unit)
+
+	if found_in_old_node:
+		# 2. If found, then erase it (erase returns void, so no assignment)
+		current_node.units.erase(unit)
+	else:
+		# 3. If not found, log the warning (this matches your original intent)
 		push_warning("Unit '%s' was not found in units list of node '%s' during move." % [unit.unit_name, current_node.node_name])
+	# --- FIX ENDS HERE ---
+
 
 	target_node.units.append(unit) # Add to new node's list
 	unit.current_node_name = target_node_name # Update unit's reference
