@@ -15,7 +15,7 @@ extends Control
 @onready var next_turn_button: Button = $VBoxContainer/NextTurnButton # Add this button
 
 # --- API and Game State ---
-var api_key = 'AIzaSyDEyEJnccvexj6WNPwnFW2ptzFkwK-pGwc' # Replace with your actual key or load securely
+var api_key = OS.get_environment("GOOGLE_API_KEY") # Replace with your actual key or load securely
 var gemini_api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" # Using 1.5 Flash as example
 
 var current_turn_faction: Unit.Faction = Unit.Faction.PLAYER
